@@ -24,6 +24,8 @@ And to these projects for information for communication with the FIS-display
 
 Thanks for the code to understand the 3LB protocol. This is really a great project!
   https://github.com/pohlinkzei/RPi_MFD_Interface
+
 Thanks for the hints for checksum generation.
+
 I managed to figure out the 2002 VW checksum-generation after study this page and numbercrunching in LibreOffice-Calc :-)
   http://www.gti-tdi.de/board4/index.php?thread/3787-tacho-full-fis-displaing-3lb/
