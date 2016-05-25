@@ -22,8 +22,8 @@ Using OBD protocol KW1281 for getting the ATF temp from the Transmission Control
     Thanks for publishing the code for the 1999 Audi
     https://github.com/tomaskovacik/arduino/tree/master/VWFIS
 
-    Thanks for the code to understand the 3LB protocl. This is really a great project!
+  Thanks for the code to understand the 3LB protocl. This is really a great project!
     https://github.com/pohlinkzei/RPi_MFD_Interface
-    Thanks for the hints for checksum generation.
-    I managed to figure out the 2002 VW checksum-generation after study this page and numbercrunching in LibreOffice-Calc :-)
+  Thanks for the hints for checksum generation.
+  I managed to figure out the 2002 VW checksum-generation after study this page and numbercrunching in LibreOffice-Calc :-)
     http://www.gti-tdi.de/board4/index.php?thread/3787-tacho-full-fis-displaing-3lb/
