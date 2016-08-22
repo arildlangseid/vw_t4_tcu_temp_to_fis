@@ -265,7 +265,7 @@ uint8_t VWOBD2::convertATFtempToC(int atfTemp) {
     case 119: return 131;
     case 120: return 132;
     
-    default: return atfTemp;
+    default: return atfTemp+100; // for debug-purposes
   }
 }
 
