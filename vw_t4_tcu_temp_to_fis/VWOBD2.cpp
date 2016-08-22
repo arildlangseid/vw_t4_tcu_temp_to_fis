@@ -147,6 +147,14 @@ uint8_t VWOBD2::getCurrAddr() {
 }
 
 uint8_t VWOBD2::convertATFtempToC(int atfTemp) {
+  /* 
+   *  The table below is created by reading out some temperatures by VCDS an quickly switch to this project and updated this table
+   *  
+   *  The lines noted by "verified" is read by VCDS and quickly changed to this project.
+   *  
+   *  As of 20160822 temperatures below 0 degrees Celsius has not been seen. Table will be updated in the wintertime
+   *  
+   */
   switch (atfTemp) {
     case 0: return 0;
     case 1: return 3;
@@ -190,27 +198,73 @@ uint8_t VWOBD2::convertATFtempToC(int atfTemp) {
     case 39: return 87;
     case 40: return 88;
     case 41: return 89;
-    case 42: return 90;
-    case 43: return 91;
-    case 44: return 92;
+    case 42: return 92; // aprox
+    case 43: return 92;
+    case 44: return 93;
     case 45: return 93;
     case 46: return 94;
-    case 47: return 95;
-    case 48: return 96;
-    case 49: return 97;
-    case 50: return 98;
-    case 51: return 99;
-    case 52: return 100;
-    case 53: return 101;
-    case 54: return 102;
-    case 55: return 103;
-    case 56: return 104;
-    case 57: return 105;
-    case 58: return 106;
-    case 59: return 107;
-    case 60: return 108;
-    case 61: return 109;
-    case 62: return 110;
+    case 47: return 94;
+    case 48: return 95;
+    case 49: return 95;
+    case 50: return 96;
+    case 51: return 97;
+    case 52: return 98;
+    case 53: return 99;
+    case 54: return 100;
+    case 55: return 100;
+    case 56: return 101;
+    case 57: return 101;
+    case 58: return 102;
+    case 59: return 102;
+    case 60: return 103;
+    case 61: return 103;
+    case 62: return 104;
+    case 63: return 104;
+    case 64: return 105;
+    case 65: return 105;
+    case 66: return 105;
+    case 67: return 106;
+    case 68: return 106;
+    case 69: return 106;
+    case 70: return 107;
+    case 71: return 107;
+    case 72: return 108;
+    case 73: return 108;
+    case 74: return 109;
+    case 75: return 109;
+    case 76: return 110;
+    case 77: return 111;
+    case 78: return 112; // verified
+    case 79: return 113;
+    case 80: return 114;
+    case 81: return 115;
+    case 82: return 116;
+    case 83: return 117;
+    case 84: return 118;
+    case 85: return 119;
+    case 99: return 120; // verified
+    case 100: return 121;
+    case 101: return 122;
+    case 102: return 122; // verified
+    case 103: return 122;
+    case 104: return 122;
+    case 105: return 123;
+    case 106: return 123;
+    case 107: return 123;
+    case 108: return 124; // verified
+    case 109: return 124;
+    case 110: return 125;
+    case 111: return 125;
+    case 112: return 125;
+    case 113: return 126;
+    case 114: return 126;
+    case 115: return 127; // verified
+    case 116: return 128;
+    case 117: return 129;
+    case 118: return 130;
+    case 119: return 131;
+    case 120: return 132;
+    
     default: return atfTemp;
   }
 }
@@ -224,8 +278,8 @@ void VWOBD2::convertGear(char buffer[2]) {
     case 4: buffer[0] = '2'; buffer[1] = 'H'; break;  // 0100
     case 5: buffer[0] = '3'; buffer[1] = 'H'; break;  // 0101
     case 6: buffer[0] = '4'; buffer[1] = 'H'; break;  // 0110
-    case 7: buffer[0] = '7'; buffer[1] = ' '; break;  // 0111
-    case 8: buffer[0] = '8'; buffer[1] = ' '; break;  // 1000
+    case 7: buffer[0] = '1'; buffer[1] = 'M'; break;  // 0111
+    case 8: buffer[0] = '2'; buffer[1] = 'M'; break;  // 1000
     case 9: buffer[0] = '3'; buffer[1] = 'M'; break;  // 1001
     case 10: buffer[0] = '4'; buffer[1] = 'M'; break; // 1010
     case 11: buffer[0] = '1'; buffer[1] = '1'; break; // 1011
