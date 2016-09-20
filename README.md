@@ -36,6 +36,6 @@ Arduino project to log what's happening on the k-line
 
 You need to y-cable the diagnostics port on the car and connect both VCDS and Alexanders modified adapter.
 
-Start the Arduino-logger and connect the serial interface in Arduino IDE. Thenconnect the VCDS and all traffic is then logged on the PC.
+Start the Arduino-logger and connect the serial interface in Arduino IDE. Then connect the VCDS and all traffic is then logged on the PC.
 
 The code needs major cleanup..... maybe sometime :-)
