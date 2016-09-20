@@ -142,7 +142,7 @@ void loop() {
 
     // display [ATF    -]
     //         [1H 007 C]
-    sprintf(fisBuffer, "ATF    %c%s %3i C", heartbeatChar,engagedGearBuffer,vwobd2.gearOilTemp);
+    sprintf(fisBuffer, "ATF    %c%c%c %3i C", heartbeatChar,engagedGearBuffer[0],engagedGearBuffer[1],vwobd2.gearOilTemp);
 
     // Write to FIS-display
 #ifdef ENABLE_FIS
