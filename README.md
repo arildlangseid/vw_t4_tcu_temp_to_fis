@@ -2,12 +2,14 @@
 Arduino project to readout Automatic Transmission Fluid Temp and write to FIS display from a VW T4 2002
 
 Using OBD protocol KW1281 for getting the ATF temp from the Transmission Control Unit (TCU)
-  Using 3LB protocol to show info on FIS-display
+
+Using 3LB protocol to show info on FIS-display
 
 Credits:
 
-  This project would not have been possible without the help of other open source projects out there.
-  Credits and thanks goes to:
+This project would not have been possible without the help of other open source projects out there.
+
+Credits and thanks goes to:
 
 Alexander's software and OBD2-interface
   
@@ -19,11 +21,11 @@ NOTE: For the level shifting, I used a 'AutoDia K409 Profi USB adapter', disasse
     was removed (so it does not influence the communication)
 
 And to these projects for information for communication with the FIS-display
-  Thanks for publishing the code for the 1999 Audi
-  https://github.com/tomaskovacik/arduino/tree/master/VWFIS
+Thanks for publishing the code for the 1999 Audi
+https://github.com/tomaskovacik/arduino/tree/master/VWFIS
 
 Thanks for the code to understand the 3LB protocol. This is really a great project!
-  https://github.com/pohlinkzei/RPi_MFD_Interface
+https://github.com/pohlinkzei/RPi_MFD_Interface
 
 Thanks for the hints for checksum generation.
 
