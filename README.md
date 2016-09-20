@@ -29,3 +29,13 @@ Thanks for the hints for checksum generation.
 
 I managed to figure out the 2002 VW checksum-generation after study this page and numbercrunching in LibreOffice-Calc :-)
   http://www.gti-tdi.de/board4/index.php?thread/3787-tacho-full-fis-displaing-3lb/
+
+
+# vw_t4_tcu_logger
+Arduino project to log what's happening on the k-line
+
+You need to y-cable the diagnostics port on the car and connect both VCDS and Alexanders modified adapter.
+
+Start the Arduino-logger and connect the serial interface in Arduino IDE. Thenconnect the VCDS and all traffic is then logged on the PC.
+
+The code needs major cleanup..... maybe sometime :-)
