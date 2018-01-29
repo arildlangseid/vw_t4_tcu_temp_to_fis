@@ -235,13 +235,26 @@ uint8_t VWOBD2::convertATFtempToC(int atfTemp) {
     case 76: return 110;
     case 77: return 111;
     case 78: return 112; // verified
-    case 79: return 113;
-    case 80: return 114;
-    case 81: return 115;
-    case 82: return 116;
-    case 83: return 117;
-    case 84: return 118;
-    case 85: return 119;
+    case 79: return 112;
+    case 80: return 112;
+    case 81: return 113;
+    case 82: return 113; // verified
+    case 83: return 114;
+    case 84: return 114;
+    case 85: return 115;
+    case 86: return 115;
+    case 87: return 116;
+    case 88: return 116;
+    case 89: return 117;
+    case 90: return 117;
+    case 91: return 118;
+    case 92: return 118;
+    case 93: return 118;
+    case 94: return 119;
+    case 95: return 119;
+    case 96: return 119;
+    case 97: return 119;
+    case 98: return 120;
     case 99: return 120; // verified
     case 100: return 121;
     case 101: return 122;
