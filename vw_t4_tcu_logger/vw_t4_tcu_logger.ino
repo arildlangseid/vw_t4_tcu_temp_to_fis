@@ -682,6 +682,260 @@ void setup() {
   //obd.begin(9600);
 }
 
+uint8_t convertATFtempToC(int atfTemp) {
+  /* 
+   *  The table below is created by reading out some temperatures by VCDS an quickly switch to this project and updated this table
+   *  
+   *  The lines noted by "verified" is read by VCDS and quickly changed to this project.
+   *  
+   *  As of 20160822 temperatures below 0 degrees Celsius has not been seen. Table will be updated in the wintertime
+   *  
+   */
+  switch (atfTemp) {
+    case 0: return 0;
+    case 1: return 3; // 2018
+    case 2: return 7; // verified
+    case 3: return 10;
+    case 4: return 14;
+    case 5: return 15;
+    case 6: return 18;
+    case 7: return 22; // verified
+    case 8: return 29; // verified
+    case 9: return 31;
+    case 10: return 33;
+    case 11: return 36;
+    case 12: return 44; //2018
+    case 13: return 47; //2018
+    case 14: return 50;
+    case 15: return 55;
+    case 16: return 59; //2018
+    case 17: return 60; //2018
+    case 18: return 60;
+    case 19: return 61;
+    case 20: return 64; //2018
+    case 21: return 65; //2018
+    case 22: return 66;
+    case 23: return 67;
+    case 24: return 68;
+    case 25: return 69;
+    case 26: return 70;
+    case 27: return 72;
+    case 28: return 74;
+    case 29: return 76;
+    case 30: return 77; //2018
+    case 31: return 78; //2018
+    case 32: return 80;
+    case 33: return 81;
+    case 34: return 82;
+    case 35: return 82; //2018
+    case 36: return 83; //2018
+    case 37: return 84; //2018
+    case 38: return 85;
+    case 39: return 86;
+    case 40: return 86; //2018
+    case 41: return 87; //2018
+    case 42: return 98; //2018
+    case 43: return 92;
+    case 44: return 93;
+    case 45: return 93;
+    case 46: return 94;
+    case 47: return 94;
+    case 48: return 95;
+    case 49: return 95;
+    case 50: return 96;
+    case 51: return 97;
+    case 52: return 98;
+    case 53: return 99;
+    case 54: return 100;
+    case 55: return 100;
+    case 56: return 101;
+    case 57: return 101;
+    case 58: return 102;
+    case 59: return 102;
+    case 60: return 103;
+    case 61: return 103;
+    case 62: return 104;
+    case 63: return 104;
+    case 64: return 105;
+    case 65: return 105;
+    case 66: return 105;
+    case 67: return 106;
+    case 68: return 106;
+    case 69: return 106;
+    case 70: return 107;
+    case 71: return 107;
+    case 72: return 108;
+    case 73: return 108;
+    case 74: return 109;
+    case 75: return 109;
+    case 76: return 110;
+    case 77: return 111;
+    case 78: return 112; // verified
+    case 79: return 112;
+    case 80: return 112;
+    case 81: return 113;
+    case 82: return 113; // verified
+    case 83: return 114;
+    case 84: return 114;
+    case 85: return 115;
+    case 86: return 115;
+    case 87: return 116;
+    case 88: return 116;
+    case 89: return 117;
+    case 90: return 117;
+    case 91: return 118;
+    case 92: return 118;
+    case 93: return 118;
+    case 94: return 119;
+    case 95: return 119;
+    case 96: return 119;
+    case 97: return 119;
+    case 98: return 120;
+    case 99: return 120; // verified
+    case 100: return 121;
+    case 101: return 122;
+    case 102: return 122; // verified
+    case 103: return 122;
+    case 104: return 122;
+    case 105: return 123;
+    case 106: return 123;
+    case 107: return 123;
+    case 108: return 124; // verified
+    case 109: return 124;
+    case 110: return 125;
+    case 111: return 125;
+    case 112: return 125;
+    case 113: return 126;
+    case 114: return 126;
+    case 115: return 127; // verified
+    case 116: return 128;
+    case 117: return 129;
+    case 118: return 130;
+    case 119: return 131;
+    case 120: return 132;
+    
+    default: return atfTemp+100; // for debug-purposes
+  }
+}
+void odbSensorPiggyBack() {
+  // Wait for init 0x55 0x01 0x8a
+  char s[4];
+  bool init_found = false;
+
+  // for message reading
+  uint8_t msg[256];
+  uint8_t data;
+  uint8_t msgLen = 0;
+
+  s[0] = 0;
+  s[1] = 0;
+  s[2] = 0;
+  s[3] = 0;
+
+  unsigned long start_millis = millis();
+  unsigned long last_millis = 0;
+  unsigned long now = millis();
+  int counter = 0;
+  Serial.print(counter);
+//  Serial.print(F("-"));
+//  Serial.println(now - start_millis);
+  last_millis = now;
+  while (!init_found) {
+    now = millis();
+//    Serial.print(counter);
+//    Serial.print(F("\t"));
+//    Serial.print(now - last_millis);
+//    Serial.print(F("\t"));
+
+    while (!obd.available()) {}
+
+    uint8_t data = obd.read();
+
+//    Serial.println(data);
+
+    last_millis = now;
+
+    counter++;
+
+    s[0] = s[1];
+    s[1] = s[2];
+    s[2] = s[3];
+    s[3] = data;
+
+    if (    (((uint8_t)s[0]) == 0x55)       //55
+            ||   (((uint8_t)s[1]) == 0x01)       //01
+            ||   (((uint8_t)s[2]) == 0x8A)       //01
+            ||   (((uint8_t)s[3]) == 0x75)   ) { //8A
+
+      Serial.println("");
+      Serial.println("55 01 8A 75 - start detected");
+      Serial.println("");
+      init_found = true;
+    }
+  }
+
+  //    0     1     2     3     4     5     6     7     8
+  // 0x04 (0xFB) 0x?? (0x??) 0x29 (0xD6) 0x05 (0xFA) 0x03
+  //             blk cntr    grp read    grp
+  while (true) {
+    counter = 0;
+    do {
+      while (!obd.available()) { }
+      data = obd.read();
+      if (data == 0x04) {
+//        Serial.print(data, HEX);
+//        Serial.print(F("\t"));
+      } else {
+//        Serial.println(F(" "));
+      }
+    } while (data != 0x04);
+  
+    msg[counter] = data;
+    counter++;
+    for (int i = 1; i <= 8; i++) {
+      while (!obd.available()) { }
+      data = obd.read();
+      msg[counter] = data;
+//      Serial.print(msg[counter], HEX);
+//      Serial.print(F("\t"));
+      counter++;
+    } // for
+
+    if (msg[4]==0x29 && msg[06]==0x05) { // 29 = block title for sensor reading, 05 = group 5
+//      Serial.print(F("SensorGroup:\t"));
+      while (!obd.available()) { }
+      msgLen = obd.read();
+      msg[counter] = msgLen;
+      counter++;
+      for (int i = 0; i < msgLen; i++) {
+        while (!obd.available()) { }
+        data = obd.read(); // throw away compliment
+        while (!obd.available()) { }
+        data = obd.read();
+        msg[counter] = data;
+        counter++;
+//        Serial.print(data, HEX);
+//        Serial.print(F("\t"));
+////        Serial.print(data);
+////        Serial.print(F("\t"));
+      } // for
+    } else {
+      Serial.println(F("Not correct msg."));
+    } // if
+
+//    Serial.println(F(" "));
+
+    Serial.print(msg[12]);
+    Serial.print(F("\t"));
+    Serial.print(msg[12], HEX);
+    Serial.print(F("\t"));
+    Serial.print(convertATFtempToC(msg[12]));
+    Serial.println(F(" "));
+
+  } // while
+}
+
+
 void obdReadPiggyBack() {
 
   // Wait for init 0x55 0x01 0x8a
@@ -700,21 +954,21 @@ void obdReadPiggyBack() {
   unsigned long now = millis();
   int counter = 0;
   Serial.print(counter);
-  Serial.print(F("-"));
-  Serial.println(now - start_millis);
+//  Serial.print(F("-"));
+//  Serial.println(now - start_millis);
   last_millis = now;
   while (!init_found) {
     now = millis();
-    Serial.print(counter);
-    Serial.print(F("\t"));
-    Serial.print(now - last_millis);
-    Serial.print(F("\t"));
+//    Serial.print(counter);
+//    Serial.print(F("\t"));
+//    Serial.print(now - last_millis);
+//    Serial.print(F("\t"));
 
     while (!obd.available()) {}
 
     uint8_t data = obd.read();
 
-    Serial.println(data);
+//    Serial.println(data);
 
     last_millis = now;
 
@@ -730,7 +984,8 @@ void obdReadPiggyBack() {
             ||   (((uint8_t)s[2]) == 0x8A)       //01
             ||   (((uint8_t)s[3]) == 0x75)   ) { //8A
 
-      Serial.println("55 01 8A 75");
+      Serial.println("");
+      Serial.println("55 01 8A 75 - start detected");
       Serial.println("");
       init_found = true;
     }
@@ -740,34 +995,36 @@ void obdReadPiggyBack() {
   while (true) {
     now = millis();
     Serial.print(counter);
-    Serial.print(F("\t"));
+    Serial.print(F(" start\t"));
     Serial.print(now - last_millis);
-    Serial.print(F("\t"));
+    Serial.print(F("ms\t"));
     // Wait for message
     while (!obd.available()) { }
     uint8_t msgLength = obd.read();
 
-    Serial.print(data);
-    Serial.print(F("\t"));
+    Serial.print(msgLength);
+    Serial.print(F("(x"));
+    Serial.print(msgLength, HEX);
+    Serial.println(F(")msgLengt\t"));
 
     last_millis = now;
 
     counter++;
 
-    if (msgLength < 16) Serial.print("0");
-    Serial.println(msgLength, HEX);
+    if (msgLength < 16) Serial.println("0");
+    //Serial.println(msgLength, HEX);
     //      Serial.print(" ");
 
     for (int i = 0; i < msgLength * 2; i++) {
       now = millis();
       Serial.print(counter);
-      Serial.print(F("\t"));
+      Serial.print(F(" msg\t"));
       Serial.print(now - last_millis);
-      Serial.print(F("\t"));
+      Serial.print(F("ms\t"));
       while (!obd.available()) { }
       data = obd.read();
 
-      Serial.print(data);
+      Serial.print(data, HEX);
       Serial.print(F("\t"));
 
       last_millis = now;
@@ -787,7 +1044,9 @@ void obdReadPiggyBack() {
 void loop() {
   Serial.println("loop");
 
-  while (true) obdReadPiggyBack();
+//  while (true) obdReadPiggyBack();
+  while (true) odbSensorPiggyBack();
+  
 
   /*
     if (digitalRead(pinButton) == LOW){
